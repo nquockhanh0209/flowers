@@ -115,6 +115,7 @@
         .flower__leafs {
           position: relative;
           animation: blooming-flower 2s backwards;
+          cursor: pointer;
         }
 
         .flower__leafs--1 { animation-delay: 1.1s; }
@@ -183,6 +184,31 @@
           height: 60%;
           border-radius: inherit;
           background: radial-gradient(circle at 30% 30%, #8B6F47, #654321);
+        }
+
+        .flower__text {
+          position: absolute;
+          bottom: 100%;
+          left: 50%;
+          transform: translateX(-50%);
+          background: rgba(255, 255, 255, 0.95);
+          padding: 12px 20px;
+          border-radius: 15px;
+          font-family: 'Arial', sans-serif;
+          font-size: 16px;
+          color: #333;
+          white-space: nowrap;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 0.3s ease, transform 0.3s ease;
+          z-index: 1000;
+          margin-bottom: 10px;
+        }
+
+        .flower__text.show {
+          opacity: 1;
+          transform: translateX(-50%) translateY(-10px);
         }
 
         .flower__line {
@@ -455,11 +481,30 @@
         @keyframes blooming-flower { 0% { transform: scale(0); } }
 
         .not-loaded * { animation-play-state: paused !important; }
+        .page-title {
+          position: fixed;
+          top: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          font-family: 'Comic Sans MS', 'Segoe UI', sans-serif;
+          font-size: 2.5rem;
+          color: #FFD700;
+          text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+          letter-spacing: 2px;
+          z-index: 10000;
+          animation: title-fade 3s ease-in-out;
+        }
+
+        @keyframes title-fade {
+          0% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+          100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
     </style>
 </head>
     
 <body class="not-loaded">
     <div class="sun"></div>
+    <h1 class="page-title">🥰 Chúc Phương Ninh của tớ</h1>
     <div class="flowers">
       <div class="flower flower--1">
         <div class="flower__leafs flower__leafs--1">
@@ -476,6 +521,7 @@
           <div class="flower__light flower__light--6"></div>
           <div class="flower__light flower__light--7"></div>
           <div class="flower__light flower__light--8"></div>
+          <div class="flower__text">Xinh đẹp rạng rỡ 💖</div>
         </div>
         <div class="flower__line">
           <div class="flower__line__leaf flower__line__leaf--1"></div>
@@ -502,6 +548,7 @@
           <div class="flower__light flower__light--6"></div>
           <div class="flower__light flower__light--7"></div>
           <div class="flower__light flower__light--8"></div>
+          <div class="flower__text">Vui vẻ tràn đầy (✿◠‿◠)</div>
         </div>
         <div class="flower__line">
           <div class="flower__line__leaf flower__line__leaf--1"></div>
@@ -526,6 +573,7 @@
           <div class="flower__light flower__light--6"></div>
           <div class="flower__light flower__light--7"></div>
           <div class="flower__light flower__light--8"></div>
+          <div class="flower__text">Ngày càng rực rỡ ✨</div>
         </div>
         <div class="flower__line">
           <div class="flower__line__leaf flower__line__leaf--1"></div>
@@ -539,22 +587,6 @@
         <div class="flower__g-long">
           <div class="flower__g-long__top"></div>
           <div class="flower__g-long__bottom"></div>
-        </div>
-      </div>
-  
-      <div class="growing-grass">
-        <div class="flower__grass flower__grass--1">
-          <div class="flower__grass--top"></div>
-          <div class="flower__grass--bottom"></div>
-          <div class="flower__grass__leaf flower__grass__leaf--1"></div>
-          <div class="flower__grass__leaf flower__grass__leaf--2"></div>
-          <div class="flower__grass__leaf flower__grass__leaf--3"></div>
-          <div class="flower__grass__leaf flower__grass__leaf--4"></div>
-          <div class="flower__grass__leaf flower__grass__leaf--5"></div>
-          <div class="flower__grass__leaf flower__grass__leaf--6"></div>
-          <div class="flower__grass__leaf flower__grass__leaf--7"></div>
-          <div class="flower__grass__leaf flower__grass__leaf--8"></div>
-          <div class="flower__grass__overlay"></div>
         </div>
       </div>
   
@@ -582,13 +614,22 @@
       </div> -->
     </div>
 
-    <script>
-      onload = () => {
-        const c = setTimeout(() => {
-          document.body.classList.remove("not-loaded");
-          clearTimeout(c);
-        }, 1000);
-      };
-    </script>
+<script>
+  onload = () => {
+    const c = setTimeout(() => {
+      document.body.classList.remove("not-loaded");
+      clearTimeout(c);
+    }, 1000);
+
+    // 🌻 Thêm sự kiện click cho từng bông hoa
+    const flowers = document.querySelectorAll('.flower__leafs');
+    flowers.forEach(flower => {
+      flower.addEventListener('click', () => {
+        const text = flower.querySelector('.flower__text');
+        text.classList.toggle('show'); // ấn lần 1 hiện, ấn lần 2 ẩn
+      });
+    });
+  };
+</script>
   </body>
 </html>
